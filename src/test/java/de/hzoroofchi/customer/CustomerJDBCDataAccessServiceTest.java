@@ -79,7 +79,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
 
 
     @Test
-    void inserCustomer() {
+    void insertCustomer() {
 
         String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
 
