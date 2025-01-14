@@ -63,9 +63,8 @@ class CustomerJPADataAccessServiceTest {
     void inserCustomer() {
        Customer customer = new Customer("John", "john@gmail.com", 18);
         //When
-       
-        //Then
 
+        //Then
 
     }
 
