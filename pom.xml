@@ -9,8 +9,12 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.hzoroofchi</groupId>
-	<artifactId>spring-boot-demo</artifactId>
+	<artifactId>hzoroofchi-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<organization>
+		<name>hzoroofchi</name>
+		<url>https://hzoroofchi.de</url>
+	</organization>
 	<name>spring-boot-demo</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -27,7 +31,9 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<docker.username>hzoroofchi</docker.username>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -80,12 +86,54 @@
 			<version>1.17.6</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-docker-compose</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.4.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>dockerBuild</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<container>
+						<mainClass>com.test.ServerApplication</mainClass>
+					</container>
+					<from>
+						<image>eclipse-temurin:17</image>
+						<platforms>
+							<platform>
+								<architecture>arm64</architecture>
+								<os>linux</os>
+							</platform>
+							<platform>
+								<architecture>amd64</architecture>
+								<os>linux</os>
+							</platform>
+						</platforms>
+					</from>
+					<to>
+						<image>docker.io/${project.organization.name}/${project.artifactId}:${project.version}</image>
+						<tags>
+							<tag>latest</tag>
+						</tags>
+					</to>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
